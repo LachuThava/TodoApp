@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import {BrowserRouter ,Route, Routes} from 'react-router-dom';
+import Login from "./components/Login";
+import SignUp from "./components/Signup";
+import Feed from "./components/Feed";
+import Task from "./components/Task";
+import {auth,app} from './firebase';
+import Notfications from "./components/Notfications";
 function App() {
+  const uid = auth.currentUser?.uid;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+        <BrowserRouter>
+          <Routes>
+            <Route exact path='/' element={<Login />}/>
+            <Route  path='/signUp'element={<SignUp />} />
+            <Route  path='/feed' element={<Feed />}/>
+            {/* <Route  path='feed/popup' element={<PopupMsg />}/> */}
+            <Route path="/feed/:name" element={<Task/>} />
+            <Route path="/notifications" element={<Notfications />} />
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 }
